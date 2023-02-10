@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-deployment
+  labels:
+    app: config-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-deployment
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: config-deployment
+    spec:
+      containers:
+      - image: sivaram6267/original-microservice:config1
+        imagePullPolicy: Always
+        name: eureka-deployment
+        ports:
+        - containerPort: 8888
+          protocol: TCP
+          ---------------------------------------------------------------------
+          
+          apiVersion: v1
+kind: Service
+metadata:
+  name: config-deployment
+spec:
+  selector:
+    app: config-deployment
+  type: LoadBalancer
+  ports:
+   -  protocol: TCP
+      port: 8888
+      targetPort: 8888
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
